@@ -21,12 +21,4 @@ router.all('*',(req,res,next)=>{
         return next();
     })(req,res,next);
 })
-
-// // --------- protected Routes -------//
-// router.post('/book',BookController.create);
-// router.get('/book',BookController.getAllBook);
-// router.get('/book/:book_id',BookController.getOneBook);
-// router.delete('/book/:book_id',BookController.deleteBook);
-// router.patch('/book/:book_id',BookController.update);
-
 module.exports=router;
