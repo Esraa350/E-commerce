@@ -5,7 +5,7 @@ CategoryController.addCategory = async (req, res, next) => {
     console.log(req.user.isAdmin);
   if (!req.user.isAdmin)
     return res.status(401).send({ error: "Unauthorized action" });
-  const { category } = req.body;
+  const { category,categoryImg } = req.body;
 
   if (!category) {
     return res
@@ -15,6 +15,7 @@ CategoryController.addCategory = async (req, res, next) => {
   try {
     const newCategory = new Category({
       category,
+      categoryImg
     });
     await newCategory.save();
     return res.status(200).json({ message: "Category Added Successfully" });

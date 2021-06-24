@@ -5,7 +5,7 @@ const ProductController = {};
 ProductController.addProduct = async (request, response) => {
   if (!request.user.isAdmin)
     return response.status(401).send({ error: "Unauthorized action" });
-  const { name, description, price, productImage, category } = req.body;
+  const { name, description, price, productImage, category } = request.body;
 
   const product = new Product({
     name,

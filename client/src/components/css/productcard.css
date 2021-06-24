@@ -1,0 +1,18 @@
+.cardDetail{
+     max-height: 700px; 
+}
+.cardDetailImg{
+    max-height: 400px;
+}
+
+.boxbtn{
+    
+    margin-top:20% !important;
+}
+.btn{
+    margin-left: 10px !important;
+}
+.price{
+    background-color: blue;
+    width: 80px !important;
+}

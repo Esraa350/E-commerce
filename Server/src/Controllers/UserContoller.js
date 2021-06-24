@@ -48,7 +48,8 @@ UserController.register = async (req, res, next) => {
 };
 UserController.getUser = async (req, res) => {
   try {
-    let users = await User.find({});
+    console.log(req.user.id,"id");
+    let users = await User.findById({_id:req.user.id});
     res.status(200);
     return res.send(users);
   } catch (err) {
@@ -59,6 +60,7 @@ UserController.getUser = async (req, res) => {
 };
 UserController.login = async (req, res, next) => {
   //username,password request
+  console.log(req.body);
   const { email, password } = req.body;
   //check username and password
   try {
