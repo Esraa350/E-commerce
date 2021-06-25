@@ -2,10 +2,10 @@ const Category = require("../Models/categoriesModels");
 const CategoryController = {};
 
 CategoryController.addCategory = async (req, res, next) => {
-    console.log(req.user.isAdmin);
+  console.log(req.user.isAdmin);
   if (!req.user.isAdmin)
     return res.status(401).send({ error: "Unauthorized action" });
-  const { category,categoryImg } = req.body;
+  const { category, categoryImg } = req.body;
 
   if (!category) {
     return res
@@ -36,21 +36,36 @@ CategoryController.updateCategroy = async (req, res, next) => {
   if (!req.user.isAdmin)
     return res.status(401).send({ error: "Unauthorized action" });
   const { id } = req.params;
-  const { categoryName } = req.body;
+  const categoryName = req.body;
+  console.log(categoryName);
   if (!categoryName)
     return res.status(400).send({ error: "please provide valid input" });
-  const category = await Category.findById(id);
-  if (!category) {
-    return res.status(400).json({ message: "Category doesn't exist !" });
-  }
-
   try {
-    await category.updateOne({ category: categoryName });
-    return res.status(200).json({ message: "Category Updated Successfully" });
+    const updataCategory = await Category.updateOne({ _id: id }, categoryName);
+    if (!updataCategory) {
+      return res.status(404).json({ error: "Category not Updated" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Category Updated Successfully" });
   } catch (err) {
     console.log(err);
   }
 };
+CategoryController.getcategory = async (req, res, next) => {
+  if (!req.user.isAdmin)
+    return res.status(401).send({ error: "Unauthorized action" });
+  const { id } = req.params;
+  try {
+    const category = await Category.findById({ _id: id }).select("-__v");
+    if (!category) {
+      return res.status(404).json({ error: "No Product found" });
+    }
+    return res.status(200).json(category);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+}
 
 CategoryController.deleteCategroy = async (req, res, next) => {
   if (!req.user.isAdmin)

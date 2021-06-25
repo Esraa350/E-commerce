@@ -21,6 +21,7 @@ import Category from "./components/category";
 import CategoryDetail from "./components/categoryDetail";
 import { loadUser } from './store/action';
 import {useSelector,useDispatch} from "react-redux";
+import Categoryform from "./components/CategoryForm";
 const App = () => {
   const [products,setProducts]=useState([]);
   const [categories,setCategories]=useState([]);
@@ -28,8 +29,8 @@ const App = () => {
   // let store=createStore(Reducers,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
   const dispatch=useDispatch();
   const fetchData=async()=>{
-    const productAPI="http://localhost:4000/product";
-    const categoryAPI="http://localhost:4000/category";
+    const productAPI="/product";
+    const categoryAPI="/category";
     const getProduct=await axios.get(productAPI)
     const getCategory=await axios.get(categoryAPI)
     axios.all([getProduct,getCategory]).then(
@@ -42,6 +43,7 @@ const App = () => {
       })
     )
   }
+  
   const tokenExpired=(token)=> {
     const expiry = JSON.parse(atob(token.split(".")[1])).exp;
     console.log(expiry);
@@ -51,9 +53,11 @@ const App = () => {
 
   useEffect(()=>{
     
-    fetchData()
+    fetchData();
+    console.log(categories);
     // dispatch(loadUser());
     console.log(tokenExpired(localStorage.getItem('token')))
+    
     axios.get('user/logged').then(
        res=>{
          setUserLogin(res.data);
@@ -111,24 +115,23 @@ const App = () => {
               )}
             />
             <Route
-              path="/admin"
-              render={(props) => (
-                <Admin
-                  products={this.state.products}
-                  OnDelete={this.deleteHandler}
-                  {...props}
-                ></Admin>
-              )}
-            />
+              path="/admin">
+                  <Admin 
+              categories={categories}
+              products={products}
+              ></Admin>
+              </Route>
            <Route path="/category">
              <Category categories={categories} />
            </Route>
+           <Route path="/categoryForm/:id" component={Categoryform} />
            <Route
               path="/categories/:id"
               render={(props) => (
                 <CategoryDetail categories={categories} products={products} {...props}/>
               )}
             />
+            
             <Route
               path="/login"
               render={(props) => <LoginForm {...props}></LoginForm>}

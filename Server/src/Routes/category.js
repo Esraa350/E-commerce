@@ -5,6 +5,7 @@ const userAuth = require("../MiddleWares/Auth");
 
 categoryrouter.post("/", userAuth.auth, CategoryController.addCategory);
 categoryrouter.get('/', CategoryController.getCategories);
+categoryrouter.get('/:id',userAuth.auth,CategoryController.getcategory);
 categoryrouter.patch('/:id', userAuth.auth, CategoryController.updateCategroy);
 categoryrouter.delete('/:id', userAuth.auth, CategoryController.deleteCategroy);
 
