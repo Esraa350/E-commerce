@@ -8,12 +8,12 @@ const Cart = ({productItem}) => {
   const dispatch = useDispatch();
   const history=useHistory();
   const deleteFromCart=(index)=>{
-    toast.warning("Delete From Cart")
+    // toast.warning("Delete From Cart")
     dispatch(removeFromCart(index));
     history.push('/cart');
   }
   const payment = (index) => {
-    toast.success("payment success");
+    // toast.success("payment success");
     dispatch(removeFromCart(index));
     history.push('/cart');
   };

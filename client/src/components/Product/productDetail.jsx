@@ -11,6 +11,7 @@ const ProductDetail = (props) => {
   const Logging = (product) => {
     if (isLogged) {
       dispatch(addToCart(product));
+      history.push('/product');
     } else {
       history.push("/login");
     }

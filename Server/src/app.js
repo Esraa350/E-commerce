@@ -7,6 +7,7 @@ const cors=require('cors');
 const userRoute=require('./Routes/user');
 const categoryRoutes = require("./Routes/category");
 const productRouters=require("./Routes/Product");
+const path=require('path')
 const app=express();
 
 
@@ -22,6 +23,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use("/user",userRoute);
 app.use("/category",categoryRoutes);
 app.use("/product",productRouters);
+// ----------- Static Files -----------//
+if (process.env.NODE_ENV === 'production') {
+   app.use(express.static(path.join(__dirname, '../../client/build')));
+   app.get('*', (req, res) => {
+     res.sendFile(
+       path.resolve(__dirname, '../../client', 'build', 'index.html')
+     );
+   });
+ }
+
 //---------- Errors ----------//
 app.use((req,res,next)=>{
    res.status(404).send({
