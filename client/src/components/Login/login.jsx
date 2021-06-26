@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import {useSelector,useDispatch} from "react-redux"
-import {login,logout} from "../store/action";
+import {useDispatch} from "react-redux";
+import {login,logout} from "../../store/action";
 import Joi from "joi-browser";
 import axios from "axios";
-import "./Form.css";
+import "../css/Form.css";
 import { Link } from "react-router-dom";
 
 const Login = (props) => {
@@ -16,7 +16,7 @@ const Login = (props) => {
     errors: {},
 
   });
-  // console.log(values,"vvavva");
+
   const schema = {
          email: Joi.string().required(),
          password: Joi.string().required(),
@@ -26,8 +26,6 @@ const Login = (props) => {
      };
   const tokenExpired=(token)=> {
     const expiry = JSON.parse(atob(token.split(".")[1])).exp;
-    console.log(expiry);
-    console.log(new Date().getTime() / 100);
     return (Math.floor(new Date().getTime() / 10000) <= expiry);
   }
   const handleSubmit = async (e) => {
@@ -36,14 +34,15 @@ const Login = (props) => {
     
     if (errors === null) {
       let obj = { ...values, username: "Esraa" };
-      console.log(obj,"objessea")
+      
       return await axios
         .post("user/login", obj)
         .then((response) => {
-          console.log(response.data);
-          console.log(response.status);
           localStorage.setItem("token", response.data.token);
-          console.log(tokenExpired(getToken()));
+          const logged=tokenExpired(getToken());
+          if(!logged){
+            dispatch(logout());
+          };
          dispatch(login(response.data.username));//to set username
           props.history.replace("/home");//to forward in home page after login
         })
@@ -51,9 +50,7 @@ const Login = (props) => {
           if (error.response) {
             // let message=error.response.errors;
             toast.error(`${error.response.data.errors}`);
-            // console.log();
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            // console.log()
           }
         });
     } else {
@@ -61,12 +58,6 @@ const Login = (props) => {
     }
   };
    const handelChange = (e) => {
-    // //clone
-    // let state = { ...this.state };
-    // //Edit
-    // state[e.currentTarget.name] = e.currentTarget.value;
-    // //Set state
-    // this.setState(state);
     const { name, value } = e.target;
     setValues({
       ...values,

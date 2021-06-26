@@ -10,14 +10,13 @@ import Reducers from "./store/reducers";
 import {createStore} from "redux";
 import {Provider} from "react-redux"
 import axios  from 'axios';
-axios.defaults.baseURL='http://localhost:5000/';
+axios.defaults.baseURL='http://localhost:5005/';
 axios.defaults.headers.common['Authorization']=localStorage.getItem('token');
 let store=createStore(Reducers,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
   <BrowserRouter>
  <Provider store={store}>  
- 
   <App/>
  </Provider>
  

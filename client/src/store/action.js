@@ -1,22 +1,27 @@
-import axios from "axios";
 
-//action
-const increament=()=>{
+import jwt from 'jwt-decode';
+
+const addToCart=(productInfo)=>{
+   return{
+       type:"ADD_TO_CART",
+       payload:productInfo,
+   }
+}
+const removeFromCart=(index)=>{
     return{
-        type:"INCREAMENT",
-        payload:2
-    };
-};
-const decreament=()=>{
-    return{
-        type:"DECREAMENT",
-        payload:1
+         type:"REMOVE_FROM_CART",
+         payload:index,
     }
-};
+}
 const login=(name)=>{
+    const token=localStorage.getItem('token');
+    const user = jwt(token);
+    console.log(user.user);
+
     return{
         type:"LOGIN",
         payload:name ? name:'',
+        isAdmin:user.user.isAdmin,
     }
 }
 const logout=(name)=>{
@@ -25,10 +30,5 @@ const logout=(name)=>{
         payload:name ? name:'',
     }
 } 
-const loadUser=()=>(dispatch,getState)=>{
-    dispatch({type:"USER_LOADING"});
-    const token=getState().auth.token;
-    
-}
 
-export{increament,decreament,login,logout,loadUser};
+export{login,logout,addToCart,removeFromCart};

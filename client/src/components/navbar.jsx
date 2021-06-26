@@ -1,13 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux"
-import {login,logout} from "../store/action";
-import "./Form.css";
+import {logout} from "../store/action";
+import "./css/Form.css";
+import CartIcone from "./Cart/CartIcon";
 
 //stateless function component
-const NavBar = (props) => {
+const NavBar = () => {
  const isLogged=useSelector((state)=>state.logged.logged);
  const username=useSelector((state)=>state.logged.name);
+ const dispatch=useDispatch();
   return (
     <nav className="navbar navbar-expand-lg navbar-dark ">
       <NavLink className="navbar-brand" to="/">
@@ -38,11 +40,6 @@ const NavBar = (props) => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="form">
-              Clothing
-            </NavLink>
-          </li>
-          <li className="nav-item">
             <NavLink className="nav-link" to="admin">
               Admin
             </NavLink>
@@ -54,16 +51,14 @@ const NavBar = (props) => {
           </li>
           <li className="nav-item">
             <NavLink className="nav-link" aria-current="page" to="/login">
-             {isLogged?"Logout":"Login"}
+             {isLogged?<button className="btnlogin" onClick={()=>dispatch(logout())}>Logout</button>:<button className="btnlogin" >Login</button>}
               
             </NavLink>
           </li>
         </ul>
-        <span className="badge badge-primary">
-          <i className="fas fa-shopping-cart "></i>
-          {props.productsCount}
-        </span>
-        <span>
+       <CartIcone/>
+        <span style={{color:"white"}}>
+        <i class="fas fa-user-circle"></i>
           {username}
         </span>
       </div>

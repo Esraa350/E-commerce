@@ -1,14 +1,12 @@
-import CounterReducer from './CounterReducer';
+import CounterReducer from './CartReducer';
 import Logged from './Logged';
-import Auth from "./Auth";
-
 import {combineReducers} from 'redux';
 
 
 const Reducers=combineReducers({
-    counter:CounterReducer,
+    cartItems:CounterReducer,
     logged:Logged,
-    auth:Auth,
+   
 })
 
 export default Reducers;

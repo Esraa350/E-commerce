@@ -77,7 +77,7 @@ CategoryController.deleteCategroy = async (req, res, next) => {
   } catch (err) {
     return res
       .status(400)
-      .josn({ message: "An Error ouccred during deletion!" });
+      .json({ message: "An Error ouccred during deletion!" });
   }
 };
 module.exports = CategoryController;

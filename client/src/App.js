@@ -1,33 +1,25 @@
 import "./App.css";
 import NavBar from "./components/navbar";
-import ShoppingCart from "./components/shoppingCart";
+import ShoppingCart from "./components/Cart/shoppingCart";
 import React, { useState,useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import { Provider } from "react-redux";
-// import Reducers from "./store/reducers";
-import {createStore} from "redux";
+import { ToastContainer } from "react-toastify";
 import Home from "./components/home";
-import ProductDetail from "./components/productDetail";
+import ProductDetail from "./components/Product/productDetail";
 import PageNotFound from "./components/pagenot";
-import Menu from "./components/menu";
-import LoginForm from "./components/mainLogin";
-import Admin from "./components/admin";
-import ProductForm from "./components/productForm";
-import signupForm from "./components/signupform";
-import Counter from "./components/Counter";
-import Category from "./components/category";
-import CategoryDetail from "./components/categoryDetail";
-import { loadUser } from './store/action';
-import {useSelector,useDispatch} from "react-redux";
-import Categoryform from "./components/CategoryForm";
+import Menu from "./components/Product/menu";
+import LoginForm from "./components/Login/mainLogin";
+import Admin from "./components/pagesAdmin/admin";
+import ProductForm from "./components/pagesAdmin/productForm";
+import signupForm from "./components/SignUp/signupform";
+import Category from "./components/Category/category";
+import CategoryDetail from "./components/Category/categoryDetail";
+import Categoryform from "./components/pagesAdmin/CategoryForm";
+import { ProtectedRoute } from './components/protectedRoute';
 const App = () => {
   const [products,setProducts]=useState([]);
   const [categories,setCategories]=useState([]);
-  const [userLogin,setUserLogin]=useState([]);
-  // let store=createStore(Reducers,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-  const dispatch=useDispatch();
   const fetchData=async()=>{
     const productAPI="/product";
     const categoryAPI="/category";
@@ -43,29 +35,9 @@ const App = () => {
       })
     )
   }
-  
-  const tokenExpired=(token)=> {
-    const expiry = JSON.parse(atob(token.split(".")[1])).exp;
-    console.log(expiry);
-    console.log(new Date().getTime() / 100);
-    return Math.floor(new Date().getTime() / 10000) >= expiry;
-  }
-
   useEffect(()=>{
     
     fetchData();
-    console.log(categories);
-    // dispatch(loadUser());
-    console.log(tokenExpired(localStorage.getItem('token')))
-    
-    axios.get('user/logged').then(
-       res=>{
-         setUserLogin(res.data);
-       },
-       err=>{
-         console.log(err);
-       }
-     )
   },[])
  
    
@@ -78,7 +50,7 @@ const App = () => {
           // productsCount={products.data.filter((p) => p.isInCart).length}
         /> 
        
-          <Counter />
+          {/* <Counter /> */}
         
 
         <main className="container">
@@ -92,16 +64,20 @@ const App = () => {
             />
             
 
-            <Route path="/productsform/:id" component={ProductForm} />
+              <Route
+              path="/productsForm/:id"
+              render={() => (
+                <ProductForm
+                  categories={categories}
+                ></ProductForm>
+              )}
+            />
             <Route
               path="/cart"
               render={(props) => (
                 <ShoppingCart
-                  products={this.state.products.filter((p) => p.isInCart)}
-                  onIncrement={this.IncrementHandler}
-                  onreset={this.resetHandler}
-                  onDelete={this.deleteHandler}
-                  {...props}
+                  products={products}
+                  
                 ></ShoppingCart>
               )}
             />
@@ -114,13 +90,7 @@ const App = () => {
                 ></Menu>
               )}
             />
-            <Route
-              path="/admin">
-                  <Admin 
-              categories={categories}
-              products={products}
-              ></Admin>
-              </Route>
+          <ProtectedRoute path="/admin" component={Admin} />
            <Route path="/category">
              <Category categories={categories} />
            </Route>

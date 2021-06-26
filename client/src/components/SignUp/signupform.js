@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from './signup';
-import"./Form.css";
+import"../css/Form.css";
 class signupForm extends Component {
     state = {  }
     render() { 

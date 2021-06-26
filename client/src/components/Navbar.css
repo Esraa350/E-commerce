@@ -16,7 +16,7 @@
     transition: 350ms;
   }
   .nav-text {
-    display: flex;
+    
     justify-content: start;
     /* align-items: center; */
     padding: 8px 0px 8px 0px;
@@ -51,10 +51,16 @@
     width: 100%;
     height: 80px;
     display: flex;
-    justify-content: start;
+    /* justify-content: start; */
     align-items: center;
   }
   
   span {
     margin-left: 16px;
+  }
+  .btnlogin{
+    color: white;
+    background-color: transparent;
+    border-radius: 5px;
+    border-width: 1px;
   }
