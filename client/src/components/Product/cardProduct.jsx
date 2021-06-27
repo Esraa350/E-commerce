@@ -5,7 +5,7 @@ const Card = ({ products }) => {
   return (
     <>
       {products.map((product) => (
-        <div key={product._id} className="col-3">
+        <div key={product._id} className="col-3 mt-4">
           <div className="card cardproduct rounded shadow overflow-hidden p-3 mb-5">
             <img
               src={product.productImage}

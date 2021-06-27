@@ -56,7 +56,7 @@ const App = () => {
         <main className="container">
           <Switch>
             
-            <Route exact
+            <Route
               path="/products/:id"
               render={(props) => (
                 <ProductDetail products={products} {...props}/>
@@ -64,7 +64,7 @@ const App = () => {
             />
             
 
-              <Route exact
+              <Route 
               path="/productsForm/:id"
               render={() => (
                 <ProductForm
@@ -72,7 +72,7 @@ const App = () => {
                 ></ProductForm>
               )}
             />
-            <Route exact
+            <Route 
               path="/cart"
               render={(props) => (
                 <ShoppingCart
@@ -81,7 +81,7 @@ const App = () => {
                 ></ShoppingCart>
               )}
             />
-            <Route exact
+            <Route 
               path="/product"
               render={() => (
                 <Menu
@@ -91,24 +91,24 @@ const App = () => {
               )}
             />
           <ProtectedRoute path="/admin" component={Admin} />
-           <Route exact  path="/category">
+           <Route   path="/category">
              <Category categories={categories} />
            </Route>
-           <Route exact path="/categoryForm/:id" component={Categoryform} />
-           <Route exact
+           <Route  path="/categoryForm/:id" component={Categoryform} />
+           <Route 
               path="/categories/:id"
               render={(props) => (
                 <CategoryDetail categories={categories} products={products} {...props}/>
               )}
             />
             
-            <Route exact
+            <Route 
               path="/login"
               render={(props) => <LoginForm {...props}></LoginForm>}
             />
             {/* <Route path="/login" component={LoginForm} /> */}
-            <Route exact path="/signUp" component={signupForm} />
-            <Route exact path="/home" render={(props) => <Home {...props}></Home> }/>
+            <Route  path="/signUp" component={signupForm} />
+            <Route  path="/home" render={(props) => <Home {...props}></Home> }/>
             <Redirect from="/" to="home" />
             <Route  path="*"component={PageNotFound} />
             {/* <Route  path="*" component={PageNotFound} /> */}

@@ -14,8 +14,8 @@ export const ProtectedRoute=({component:Component,...rest})=>{
              (props)=>{
                  if(isLogged&&isAdmin){
                  return<Component/>
-             }else if(!isAdmin){
-                toast.info("Not Admin");
+             }
+             else if(isLogged&&!isAdmin){
                 return <Redirect to={
                     {
                         pathname:'/',

@@ -5,8 +5,10 @@ import "../Navbar.css";
 import Product from "./productsAdmin";
 import Category from "./CategoryAdmin";
 const Admin = () => {
+  
   return (
     <>
+
       <div className="row">
         <div className="col-3">
           <nav className="nav-menu">

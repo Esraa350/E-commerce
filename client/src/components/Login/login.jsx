@@ -39,10 +39,10 @@ const Login = (props) => {
         .post("user/login", obj)
         .then((response) => {
           localStorage.setItem("token", response.data.token);
-          const logged=tokenExpired(getToken());
-          if(!logged){
-            dispatch(logout());
-          };
+          // const logged=tokenExpired(getToken());
+          // if(!logged){
+          //   dispatch(logout());
+          // };
          dispatch(login(response.data.username));//to set username
           props.history.replace("/home");//to forward in home page after login
         })

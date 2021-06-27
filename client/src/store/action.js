@@ -16,7 +16,6 @@ const removeFromCart=(index)=>{
 const login=(name)=>{
     const token=localStorage.getItem('token');
     const user = jwt(token);
-    console.log(user.user);
 
     return{
         type:"LOGIN",
